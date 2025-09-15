@@ -6,6 +6,21 @@ export function setupUI(onSpin) {
   const lngSlot = document.querySelector('#lngSlot .roulette__slot-value');
   const result = document.querySelector('#result');
   const link = document.querySelector('#gmapsLink');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyStatus = document.getElementById('copyStatus');
+
+  copyBtn.addEventListener('click', () => {
+    const lat = latSlot.textContent;
+    const lng = lngSlot.textContent;
+    const text = `${lat}, ${lng}`;
+    navigator.clipboard.writeText(text).then(() => {
+      copyStatus.textContent = 'Copied!';
+      setTimeout(() => copyStatus.textContent = '', 1500);
+    }).catch(() => {
+      copyStatus.textContent = 'Failed to copy';
+      setTimeout(() => copyStatus.textContent = '', 1500);
+    });
+  });
 
   let animInterval;
 

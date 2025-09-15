@@ -181,3 +181,30 @@ body,
 .roulette__gmaps-link:hover {
     color: var(--heliotrope);
 }
+
+/* Copy button */
+.roulette__copy-btn {
+    margin-left: 12px;
+    padding: 6px 16px;
+    background: var(--heliotrope);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.roulette__copy-btn:hover {
+    background: var(--majorelle-blue);
+    color: var(--white);
+}
+
+/* Copy status */
+.roulette__copy-status {
+    margin-left: 10px;
+    font-size: 0.95rem;
+    color: var(--light-coral);
+    font-weight: 500;
+}
