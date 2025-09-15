@@ -1,5 +1,11 @@
 import { polygonGeoJSON } from './coordinates.js';
 import Palette from '../../../js/general.js';
+const dartIcon = L.icon({
+  iconUrl: 'assets/darts.png',
+  iconSize: [72, 72],
+  iconAnchor: [0, 72],
+  popupAnchor: [28, -72]
+});
 let map, marker;
 
 export function initMap() {
@@ -12,7 +18,7 @@ export function initMap() {
 
 export function showMarker([lat, lng]) {
   if (marker) marker.remove();
-  marker = L.marker([lat, lng]).addTo(map);
+  marker = L.marker([lat, lng], { icon: dartIcon }).addTo(map);
   L.circle([lat, lng], { radius: 75, color: Palette.smokyBlack, fillOpacity: 0.2 }).addTo(map);
   map.setView([lat, lng], 20, { animate: true });
 
