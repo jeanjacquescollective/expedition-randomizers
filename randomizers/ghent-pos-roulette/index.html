@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gent Roulette</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+    <div id="map" class="roulette__map"></div>
+    <div id="controls" class="roulette__controls">
+        <div class="roulette__slot-display">
+            <div class="roulette__slot roulette__slot--lat" id="latSlot">Lat: 00.00000</div>
+            <div class="roulette__slot roulette__slot--lng" id="lngSlot">Lng: 00.00000</div>
+        </div>
+        <button id="spinBtn" class="roulette__spin-btn">🎰 Spin!</button>
+        <div id="result" class="roulette__result hidden">
+            <a id="gmapsLink" class="roulette__gmaps-link" href="#" target="_blank">View on Google Maps</a>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>

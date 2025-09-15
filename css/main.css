@@ -1,0 +1,17 @@
+@import 'palette.css';
+
+/* color variables
+    --heliotrope: #D766F1ff;
+    --smoky-black: #211B06ff;
+    --majorelle-blue: #674FF9ff;
+    --dark-purple: #2D152Cff;
+    --light-coral: #F0686Aff;
+*/
+
+
+body{
+    background: url('../assets/png/background.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: sans-serif;
+}
+
