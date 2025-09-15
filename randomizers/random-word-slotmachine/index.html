@@ -26,43 +26,43 @@
             text-align: center;
         }
         .word-display {
-            font-size: 1em;
-            letter-spacing: 0.1em;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .letter-slot {
             background: #111;
             border: 4px solid #ffd700;
             border-radius: 10px;
-            padding: 20px 40px;
-            margin-bottom: 30px;
-            min-width: 320px;
-            min-height: 1.2em;
+            width: 48px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
             box-shadow: 0 0 20px #ffd700 inset;
-            transition: background 0.2s;
-            width: 320px;
-            height: 1.2em;
-            overflow: hidden;
-            perspective: 800px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .slot-roller {
-            width: 100%;
-            height: 1.2em;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(.17,.67,.83,.67);
+            overflow: hidden;
         }
-        .slot-word {
+        .letter-roller {
             position: absolute;
-            left: 0;
             width: 100%;
-            height: 1.2em;
+            height: 100%;
+            transition: transform 1s cubic-bezier(.17,.67,.83,.67);
+            will-change: transform;
+        }
+        .letter {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            backface-visibility: hidden;
             font-size: inherit;
             color: inherit;
+            position: absolute;
+            left: 0;
+            top: 0;
         }
         .lever {
             position: absolute;
@@ -109,81 +109,82 @@
 </head>
 <body>
     <div class="slot-machine">
-        <div class="word-display" id="wordDisplay">
-            <div class="slot-roller" id="slotRoller"></div>
-        </div>
+        <div class="word-display" id="wordDisplay"></div>
         <button class="spin-btn" id="spinBtn">SPIN</button>
         <div class="lever" id="lever">
             <div class="lever-ball"></div>
         </div>
     </div>
-    <script>
-        let wordList = [];
-        let spinning = false;
-        let lastIndex = 0;
+<script>
+    let wordList = [];
+    let maxLen = 0;
+    let spinning = false;
 
-        // Load wordlist.json
-        fetch('./assets/json/wordlist.json')
-            .then(response => response.json())
-            .then(data => {
-                wordList = data.begrippen || [];
-                renderWords();
-            });
+    fetch('./assets/json/wordlist.json')
+        .then(response => response.json())
+        .then(data => {
+            wordList = data.begrippen || [];
+            maxLen = wordList.reduce((max, w) => Math.max(max, w.length), 0);
+            renderSlots();
+        });
 
-        function renderWords() {
-            const roller = document.getElementById('slotRoller');
-            roller.innerHTML = '';
-            const N = wordList.length;
-            if (!N) {
-                roller.innerHTML = `<div class="slot-word" style="transform: rotateX(0deg) translateZ(60px);">---</div>`;
-                return;
+    function renderSlots() {
+        const display = document.getElementById('wordDisplay');
+        display.innerHTML = '';
+        for (let i = 0; i < maxLen; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'letter-slot';
+            slot.innerHTML = `<div class="letter-roller" id="roller${i}"></div>`;
+            display.appendChild(slot);
+            renderLetters(i, ' ');
+        }
+    }
+
+    function renderLetters(slotIdx, letter) {
+        const roller = document.getElementById(`roller${slotIdx}`);
+        roller.innerHTML = '';
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
+        for (let i = 0; i < alphabet.length; i++) {
+            const div = document.createElement('div');
+            div.className = 'letter';
+            div.style.transform = `translateY(${i * 64}px)`;
+            div.textContent = alphabet[i];
+            roller.appendChild(div);
+        }
+        const idx = alphabet.indexOf(letter.toUpperCase());
+        roller.style.transform = `translateY(-${(idx >= 0 ? idx : alphabet.length - 1) * 64}px)`;
+    }
+
+    function spinSlotMachine() {
+        if (spinning || !wordList.length) return;
+        spinning = true;
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
+        const chosenWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
+
+        // Stap 1: Toon random letters
+        for (let i = 0; i < maxLen; i++) {
+            const roller = document.getElementById(`roller${i}`);
+            const randomIdx = Math.floor(Math.random() * alphabet.length);
+            roller.style.transition = 'transform 0.3s cubic-bezier(.17,.67,.83,.67)';
+            roller.style.transform = `translateY(-${randomIdx * 64}px)`;
+        }
+
+        // Stap 2: Na korte delay direct naar juiste letter
+        setTimeout(() => {
+            for (let i = 0; i < maxLen; i++) {
+                const roller = document.getElementById(`roller${i}`);
+                const letter = chosenWord[i] || ' ';
+                const idx = alphabet.indexOf(letter);
+                roller.style.transition = 'transform 0.5s cubic-bezier(.17,.67,.83,.67)';
+                roller.style.transform = `translateY(-${idx * 64}px)`;
             }
-            // Place words in a circle
-            const radius = 600; // px
-            for (let i = 0; i < N; i++) {
-                const deg = (360 / N) * i;
-                const wordDiv = document.createElement('div');
-                wordDiv.className = 'slot-word';
-                wordDiv.style.transform = `rotateX(${deg}deg) translateZ(${radius}px)`;
-                wordDiv.textContent = wordList[i];
-                roller.appendChild(wordDiv);
-            }
-            // Show first word
-            setRollerRotation(0);
-        }
+            setTimeout(() => { spinning = false; }, 600);
+        }, 400);
+    }
 
-        function setRollerRotation(idx) {
-            const N = wordList.length;
-            if (!N) return;
-            const deg = (360 / N) * idx;
-            document.getElementById('slotRoller').style.transform = `rotateX(-${deg}deg)`;
-            lastIndex = idx;
-        }
+    document.getElementById('spinBtn').addEventListener('click', spinSlotMachine);
+    document.getElementById('lever').addEventListener('click', spinSlotMachine);
+</script>
 
-        function spinSlotMachine() {
-            if (spinning || !wordList.length) return;
-            spinning = true;
-            const N = wordList.length;
-            let spins = Math.floor(Math.random() * N) + N * 3; // at least 3 full spins
-            let targetIdx = Math.floor(Math.random() * N);
-            let totalIdx = lastIndex + spins + targetIdx;
-            let duration = 1800 + Math.random() * 600;
-
-            const roller = document.getElementById('slotRoller');
-            roller.style.transition = `transform ${duration}ms cubic-bezier(.17,.67,.83,.67)`;
-            setTimeout(() => {
-                roller.style.transition = '';
-                spinning = false;
-                lastIndex = totalIdx % N;
-            }, duration);
-
-            // Animate to target
-            const deg = (360 / N) * totalIdx;
-            roller.style.transform = `rotateX(-${deg}deg)`;
-        }
-
-        document.getElementById('spinBtn').addEventListener('click', spinSlotMachine);
-        document.getElementById('lever').addEventListener('click', spinSlotMachine);
-    </script>
 </body>
 </html>
