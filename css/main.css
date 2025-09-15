@@ -1,77 +1,120 @@
 @import 'general.css';
 
-.background-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    z-index: -1;
-    background-color: black;
-
-}
-
-.background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    z-index: -1;
-    animation: background-animation 30s linear infinite;
-}
-
-.layer-1 {
-    animation-delay: 0s;
-}
-
-.layer-2 {
-    animation-delay: 2s;
-}
-
-.layer-3 {
-    animation-delay: 4s;
-}
-
-.layer-4 {
-    animation-delay: 6s;
-}
-
-.layer-5 {
-    animation-delay: 8s;
-}
-
-.layer-6 {
-    animation-delay: 10s;
-}
-
-
-@keyframes background-animation {
-    0% {
-        transform: scale(1) translate(0, 0);
-    }
-
-    50% {
-        transform: scale(1.1) translate(-5%, -5%);
-    }
-
-    100% {
-        transform: scale(1) translate(0, 0);
-    }
-}
-
+/* ===========================
+    Variables & Base Styles
+    =========================== */
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+     margin: 0;
 }
 
-h1{
-        color: var(--white);
+h1 {
+     color: var(--white);
+}
 
+/* ===========================
+    Expedition Container
+    =========================== */
+.expedition {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     min-height: 100vh;
+     z-index: 1;
+}
+
+/* ===========================
+    Title
+    =========================== */
+.expedition__title {
+     color: var(--white);
+     font-size: 3rem;
+     margin-bottom: 2rem;
+     text-align: center;
+     letter-spacing: 0.1em;
+}
+
+/* ===========================
+    Navigation
+    =========================== */
+.expedition__nav {
+     display: flex;
+     align-items: center;
+     gap: 1.5rem;
+     margin-bottom: 2rem;
+}
+
+.expedition__link {
+     color: var(--white);
+     text-decoration: none;
+     padding: 0.5em 1.5em;
+     border: 2px solid var(--white);
+     border-radius: 0;
+     font-size: 1.2rem;
+     background: rgba(0,0,0,0.4);
+     position: relative;
+     transition: background 0.2s, color 0.2s;
+}
+
+.expedition__link:hover {
+     background: var(--white);
+     color: var(--black);
+}
+
+.expedition__nav .expedition__link::after {
+     content: "→";
+     margin-left: 1rem;
+     color: var(--white);
+     font-weight: bold;
+     font-size: 1.2em;
+     vertical-align: middle;
+}
+
+/* ===========================
+    Background
+    =========================== */
+.expedition__background {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100vw;
+     height: 100vh;
+     overflow: hidden;
+     z-index: -1;
+     background-color: black;
+}
+
+.expedition__background-image {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100vw;
+     height: 100vh;
+     object-fit: cover;
+     z-index: -1;
+     animation: background-animation 30s linear infinite;
+}
+
+/* Layered Animation Delays */
+.expedition__background-image--color   { animation-delay: 0s; }
+.expedition__background-image--layer1  { animation-delay: 2s; }
+.expedition__background-image--layer2  { animation-delay: 4s; }
+.expedition__background-image--layer3  { animation-delay: 6s; }
+.expedition__background-image--layer4  { animation-delay: 8s; }
+.expedition__background-image--layer5  { animation-delay: 10s; }
+.expedition__background-image--layer6  { animation-delay: 12s; }
+
+/* ===========================
+    Animations
+    =========================== */
+@keyframes background-animation {
+     0%   { transform: scale(1) translate(0, 0); }
+     50%  { transform: scale(1.1) translate(-5%, -5%); }
+     100% { transform: scale(1) translate(0, 0); }
 }
