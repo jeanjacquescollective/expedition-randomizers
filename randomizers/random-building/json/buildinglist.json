@@ -1,0 +1,19 @@
+{
+	"buildings": [
+		{
+			"name": "Empire State Building",
+			"address": "350 Fifth Avenue, New York",
+			"image": "https://source.unsplash.com/random/400x300/?empire+state+building"
+		},
+		{
+			"name": "Taj Mahal",
+			"address": "Agra, Uttar Pradesh, India",
+			"image": "https://source.unsplash.com/random/400x300/?taj+mahal"
+		},
+		{
+			"name": "Eiffel Tower",
+			"address": "Champ de Mars, Paris, France",
+			"image": "https://source.unsplash.com/random/400x300/?eiffel+tower"
+		}
+	]
+}

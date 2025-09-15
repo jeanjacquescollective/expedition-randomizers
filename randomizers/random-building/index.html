@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Building Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            perspective: 1000px;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+        }
+
+        .card-front {
+            background: #2a2a2a;
+            border: 2px solid #3a3a3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-front::after {
+            content: "?";
+            font-size: 48px;
+            color: #4a4a4a;
+        }
+
+        .card-back {
+            background: #2a2a2a;
+            transform: rotateY(180deg);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .building-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .building-info {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .building-name {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .building-address {
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid" id="buildingGrid"></div>
+
+    <script>
+        let buildings = [];
+
+        // Fetch buildings data from JSON file
+        async function fetchBuildings() {
+            try {
+                const response = await fetch('json/buildinglist.json');
+                const data = await response.json();
+                buildings = data.buildings;
+                createCards();
+            } catch (error) {
+                console.error('Error loading buildings:', error);
+            }
+        }
+
+        const grid = document.getElementById('buildingGrid');
+
+        function createCards() {
+            // Create 12 cards
+            for (let i = 0; i < 12; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back">
+                            <img class="building-image" src="" alt="Building">
+                            <div class="building-info">
+                                <div class="building-name"></div>
+                                <div class="building-address"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', function () {
+                    if (!this.classList.contains('flipped')) {
+                        const randomBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+                        const backside = this.querySelector('.card-back');
+                        backside.querySelector('.building-image').src = randomBuilding.image;
+                        backside.querySelector('.building-name').textContent = randomBuilding.name;
+                        backside.querySelector('.building-address').textContent = randomBuilding.address;
+                        this.classList.add('flipped');
+                    }
+                });
+
+                grid.appendChild(card);
+            }
+        }
+
+        // Initialize the application
+        fetchBuildings();
+    </script>
+</body>
+
+</html>
