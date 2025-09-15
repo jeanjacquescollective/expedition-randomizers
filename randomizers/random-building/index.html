@@ -25,6 +25,7 @@
             perspective: 1000px;
             height: 300px;
             cursor: pointer;
+            width: 100%;
         }
 
         .card-inner {
@@ -33,6 +34,7 @@
             height: 100%;
             transform-style: preserve-3d;
             transition: transform 0.6s;
+            box-sizing: border-box;
         }
 
         .card.flipped .card-inner {
@@ -46,6 +48,7 @@
             height: 100%;
             backface-visibility: hidden;
             border-radius: 10px;
+            box-sizing: border-box;
         }
 
         .card-front {
@@ -68,6 +71,7 @@
             padding: 15px;
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
         }
 
         .building-image {
@@ -90,6 +94,11 @@
         .building-address {
             font-size: 12px;
             color: #888;
+        }
+
+        .card.used {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -115,6 +124,9 @@
         const grid = document.getElementById('buildingGrid');
 
         function createCards() {
+            let lastFlippedCard = null;
+            let usedCards = new Set(); // Track all used cards
+
             // Create 12 cards
             for (let i = 0; i < 12; i++) {
                 const card = document.createElement('div');
@@ -134,14 +146,31 @@
                 `;
 
                 card.addEventListener('click', function () {
-                    if (!this.classList.contains('flipped')) {
-                        const randomBuilding = buildings[Math.floor(Math.random() * buildings.length)];
-                        const backside = this.querySelector('.card-back');
-                        backside.querySelector('.building-image').src = randomBuilding.image;
-                        backside.querySelector('.building-name').textContent = randomBuilding.name;
-                        backside.querySelector('.building-address').textContent = randomBuilding.address;
-                        this.classList.add('flipped');
+                    // Check if card is already used or flipped
+                    if (this.classList.contains('used') || this.classList.contains('flipped')) {
+                        return; // Do nothing if card is already used or flipped
                     }
+
+                    // Flip back the previous card if it exists
+                    if (lastFlippedCard) {
+                        lastFlippedCard.classList.remove('flipped');
+                        // Mark the previous card as used
+                        lastFlippedCard.classList.add('used');
+                        usedCards.add(lastFlippedCard);
+                    }
+
+                    // Update the current card
+                    const randomBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+                    const backside = this.querySelector('.card-back');
+                    backside.querySelector('.building-image').src = randomBuilding.image;
+                    backside.querySelector('.building-name').textContent = randomBuilding.name;
+                    backside.querySelector('.building-address').textContent = randomBuilding.address;
+
+                    // Flip the current card
+                    this.classList.add('flipped');
+
+                    // Update the last flipped card reference
+                    lastFlippedCard = this;
                 });
 
                 grid.appendChild(card);
