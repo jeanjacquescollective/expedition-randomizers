@@ -13,7 +13,7 @@ export function initMap() {
 export function showMarker([lat, lng]) {
   if (marker) marker.remove();
   marker = L.marker([lat, lng]).addTo(map);
-  L.circle([lat, lng], { radius: 50, color: Palette.smokyBlack, fillOpacity: 0.2 }).addTo(map);
+  L.circle([lat, lng], { radius: 75, color: Palette.smokyBlack, fillOpacity: 0.2 }).addTo(map);
   map.setView([lat, lng], 20, { animate: true });
 
 }
