@@ -1,0 +1,183 @@
+@import url('../../../css/general.css');
+
+/* colors:
+    --heliotrope: #D766F1ff;
+    --smoky-black: #211B06ff;
+    --majorelle-blue: #674FF9ff;
+    --dark-purple: #2D152Cff;
+    --light-coral: #F0686Aff;
+    --white: #FFFFFFFF;
+    --black: #000000ff; */
+
+:root {
+    --heliotrope: #D766F1;
+    --smoky-black: #211B06;
+    --majorelle-blue: #674FF9;
+    --dark-purple: #2D152C;
+    --light-coral: #F0686A;
+    --white: #FFFFFF;
+    --black: #000000;
+}
+
+html,
+body,
+.map__container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url('../../../assets/png/background.png') no-repeat center center fixed;
+}
+
+/* .roulette__overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    z-index: 999;
+    pointer-events: none;
+    background: url('../../../assets/png/background.png') no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.5;
+} */
+
+.roulette__map {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+/* Shared controls styling */
+.roulette__controls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    /* box-shadow: 0 4px 24px var(--light-coral); */
+    padding: 24px 32px 18px 32px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+    border: none;
+}
+
+/* Top controls position */
+.roulette__controls--top {
+    top: 0;
+}
+
+/* Bottom controls position */
+.roulette__controls--bottom {
+    bottom: 0;
+}
+
+/* Slot display */
+.roulette__slot-display {
+    display: flex;
+    gap: 18px;
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+}
+
+/* Slot styling */
+.roulette__slot {
+    background: none;
+    color: var(--dark-purple);
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--heliotrope);
+    min-width: 120px;
+    text-align: center;
+    box-shadow: none;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-shadow: none;
+    transition: border 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Lat slot specific */
+.roulette__slot--lat {
+    border-color: var(--majorelle-blue);
+}
+
+/* Lng slot specific */
+.roulette__slot--lng {
+    border-color: var(--majorelle-blue);
+}
+
+/* Slot label */
+.roulette__slot-label {
+    font-size: 0.9rem;
+    color: var(--light-coral);
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+}
+
+/* Slot value */
+.roulette__slot-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--majorelle-blue);
+}
+
+/* Spin button */
+.roulette__spin-btn {
+    font-size: 1.2rem;
+    padding: 10px 28px;
+    background: var(--majorelle-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    /* box-shadow: 0 2px 8px var(--heliotrope); */
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.roulette__spin-btn:hover {
+    background: var(--heliotrope);
+    color: var(--white);
+}
+
+.roulette__spin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Result hidden */
+.roulette__result.hidden {
+    display: none;
+}
+
+/* Google Maps link */
+.roulette__gmaps-link {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--majorelle-blue);
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    text-decoration: underline;
+    font-weight: 500;
+    box-shadow: none;
+    transition: color 0.2s;
+}
+
+.roulette__gmaps-link:hover {
+    color: var(--heliotrope);
+}

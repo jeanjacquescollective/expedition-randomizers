@@ -1,65 +1,18 @@
-@import 'palette.css';
+@import 'general.css';
 
-/* color variables
-    --heliotrope: #D766F1ff;
-    --smoky-black: #211B06ff;
-    --majorelle-blue: #674FF9ff;
-    --dark-purple: #2D152Cff;
-    --light-coral: #F0686Aff;
-*/
-
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('../assets/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'JetBrains Mono';
-    src: url('../assets/webfonts/JetBrainsMono-ExtraBold.woff2') format('woff2');
-    font-weight: extra-bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-
-
-body{
-    /* background: url('../assets/png/background.png') no-repeat center center fixed; */
-    background-size: cover;
-    font-family: 'JetBrains Mono', monospace;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;  
-    margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--white);
-    text-align: center;
-}
-
-h1 {
-    font-size: 5em;
-}
-
-.background-container{
+.background-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-
+    z-index: -1;
+    background-color: black;
 
 }
 
-.background-image{
+.background-image {
     position: fixed;
     top: 0;
     left: 0;
@@ -67,4 +20,53 @@ h1 {
     height: 100vh;
     object-fit: cover;
     z-index: -1;
+    animation: background-animation 30s linear infinite;
+}
+
+.layer-1 {
+    animation-delay: 0s;
+}
+
+.layer-2 {
+    animation-delay: 2s;
+}
+
+.layer-3 {
+    animation-delay: 4s;
+}
+
+.layer-4 {
+    animation-delay: 6s;
+}
+
+.layer-5 {
+    animation-delay: 8s;
+}
+
+.layer-6 {
+    animation-delay: 10s;
+}
+
+
+@keyframes background-animation {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    50% {
+        transform: scale(1.1) translate(-5%, -5%);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
 }

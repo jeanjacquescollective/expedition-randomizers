@@ -2,16 +2,16 @@ export function setupUI(onSpin) {
   const btn = document.getElementById('spinBtn');
   btn.addEventListener('click', onSpin);
 
-  const latSlot = document.getElementById('latSlot');
-  const lngSlot = document.getElementById('lngSlot');
-  const result = document.getElementById('result');
-  const link = document.getElementById('gmapsLink');
+  const latSlot = document.querySelector('#latSlot .roulette__slot-value');
+  const lngSlot = document.querySelector('#lngSlot .roulette__slot-value');
+  const result = document.querySelector('#result');
+  const link = document.querySelector('#gmapsLink');
 
   let animInterval;
 
   function updateSlot(lat, lng) {
-    latSlot.textContent = `Lat: ${lat.toFixed(5)}`;
-    lngSlot.textContent = `Lng: ${lng.toFixed(5)}`;
+    latSlot.textContent = `${lat.toFixed(5)}`;
+    lngSlot.textContent = `${lng.toFixed(5)}`;
   }
 
   function startRolling() {

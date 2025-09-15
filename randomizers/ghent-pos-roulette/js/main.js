@@ -1,6 +1,7 @@
-import { initMap, showMarker } from './map.js';
+import { initMap, resetMap, showMarker } from './map.js';
 import { spinRoulette } from './spinner.js';
 import { setupUI } from './ui.js';
+import Palette from '../../../js/general.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initMap();
@@ -10,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function startSpin(ui) {
   ui.disableSpin();
   ui.startRolling();
-  spinRoulette(pt=> showMarker(pt), pt => {
+  resetMap();
+  spinRoulette(pt => {
     ui.stopRolling(pt);
     showMarker(pt);
     ui.enableSpin();
