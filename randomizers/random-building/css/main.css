@@ -1,0 +1,303 @@
+:root {
+	--bg: #1a1a1a;
+	--fg: #eaeaea;
+	--muted: #bdbdbd;
+	--card: #2a2a2a;
+	--card-border: #3a3a3a;
+	--card-used: #111111;
+}
+
+* {
+	box-sizing: border-box;
+}
+body {
+	background-color: var(--bg);
+	color: var(--fg);
+	font-family: "Orbitron", sans-serif;
+	margin: 0;
+	padding: 20px;
+	font-weight: 600;
+}
+
+/* Top bar */
+.topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.topbar h1 {
+	font-size: 18px;
+	margin: 0;
+	letter-spacing: 0.5px;
+	color: #eaeaea;
+}
+
+.btn {
+	background: #2a2a2a;
+	border: 1px solid #3a3a3a;
+	border-radius: 8px;
+	padding: 10px 14px;
+	color: #eaeaea;
+	cursor: pointer;
+	font-family: inherit;
+	font-weight: 700;
+	transition: transform 0.05s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover {
+	background: #333;
+	border-color: #4a4a4a;
+}
+.btn:active {
+	transform: translateY(1px);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 20px;
+	padding: 20px 0;
+}
+
+.card {
+	perspective: 1000px;
+	height: 300px;
+	cursor: pointer;
+	width: 100%;
+}
+
+.card-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 0.6s;
+	box-sizing: border-box;
+}
+
+.card.flipped .card-inner {
+	transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+	border-radius: 10px;
+	box-sizing: border-box;
+}
+
+.card-front {
+	background: var(--card);
+	border: 2px solid var(--card-border);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.used .card-front {
+	background: var(--card-used);
+}
+.card-front::after {
+	content: "?";
+	font-size: 48px;
+	color: #4a4a4a;
+}
+
+.card-back {
+	background: #4d4b4b;
+	transform: rotateY(180deg);
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+.building-image {
+	width: 100%;
+	height: 170px;
+	object-fit: contain;
+	border-radius: 5px;
+}
+
+.building-info {
+	margin-top: 10px;
+	text-align: center;
+}
+.building-name {
+	font-size: 16px;
+	margin-bottom: 5px;
+	margin-top: 15px;
+	letter-spacing: 0.5px;
+}
+.building-address {
+	font-size: 12px;
+	color: #c8c8c8;
+	letter-spacing: 0.5px;
+}
+.card.used {
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+
+/* Sidebar */
+.sidebar {
+	position: fixed;
+	top: 0;
+	right: -380px;
+	width: 360px;
+	height: 100vh;
+	background: #111;
+	border-left: 1px solid #2a2a2a;
+	box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
+	transition: right 0.3s ease;
+	padding: 16px;
+	z-index: 999;
+	overflow-y: auto;
+}
+
+.sidebar.open {
+	right: 0;
+}
+.sidebar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-bottom: 10px;
+	position: sticky;
+	top: 0;
+	background: #111;
+	padding-bottom: 10px;
+	z-index: 1;
+}
+.sidebar h2 {
+	font-size: 16px;
+	margin: 0;
+	color: #eaeaea;
+	letter-spacing: 0.5px;
+}
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.list-item {
+	display: grid;
+	grid-template-columns: 64px 1fr;
+	gap: 10px;
+	background: #181818;
+	border: 1px solid #262626;
+	border-radius: 10px;
+	padding: 8px;
+}
+
+.list-item img {
+	width: 64px;
+	height: 64px;
+	object-fit: cover;
+	border-radius: 6px;
+}
+
+.meta {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.meta .title {
+	font-size: 13px;
+	color: #fff;
+	line-height: 1.2;
+}
+.meta .sub {
+	font-size: 11px;
+	color: #bdbdbd;
+}
+.badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px solid #3a3a3a;
+	border-radius: 999px;
+	font-size: 10px;
+	color: #eaeaea;
+	margin-left: 6px;
+}
+.muted {
+	color: var(--muted);
+	font-size: 12px;
+}
+.empty {
+	padding: 8px;
+	border: 1px dashed #333;
+	border-radius: 8px;
+	color: #bdbdbd;
+	font-size: 12px;
+	text-align: center;
+}
+
+/* ------------------ PRINT: export sidebar als PDF ------------------ */
+@media print {
+	@page {
+		size: A4;
+		margin: 12mm;
+	}
+
+	/* reset kleuren en verberg alles behalve sidebar */
+	body {
+		background: #fff !important;
+		color: #000 !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		padding: 0;
+		font-weight: 500;
+	}
+
+	.topbar,
+	#buildingGrid,
+	.btn,
+	.sidebar-header button {
+		/* hide knoppen */
+		display: none !important;
+	}
+
+	.sidebar {
+		position: static !important;
+		right: 0 !important;
+		width: auto !important;
+		height: auto !important;
+		box-shadow: none !important;
+		border: none !important;
+		background: #fff !important;
+		color: #000 !important;
+		padding: 0 !important;
+	}
+
+	.sidebar-header {
+		position: static !important;
+		background: #fff !important;
+		padding: 0 0 8px 0 !important;
+		margin-bottom: 8px !important;
+	}
+
+	.sidebar h2,
+	.badge {
+		color: #000 !important;
+		border-color: #000 !important;
+	}
+
+	.list-item {
+		background: #fff !important;
+		border: 1px solid #aaa !important;
+		page-break-inside: avoid;
+	}
+
+	.meta .title,
+	.meta .sub,
+	.muted {
+		color: #000 !important;
+	}
+}

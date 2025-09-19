@@ -1,195 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Building Explorer</title>
-    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-    <link rel="dns-prefetch" href="https://res.cloudinary.com">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Building</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #1a1a1a;
-            color: white;
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 20px;
-            font-weight: 600;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .card {
-            perspective: 1000px;
-            height: 300px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            box-sizing: border-box;
-        }
-
-        .card.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front,
-        .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-
-        .card-front {
-            background: #2a2a2a;
-            border: 2px solid #3a3a3a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .used .card-front {
-            background: #111111;
-        }
-
-        .card-front::after {
-            content: "?";
-            font-size: 48px;
-            color: #4a4a4a;
-        }
-
-        .card-back {
-            background: #4d4b4b;
-            transform: rotateY(180deg);
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-
-        .building-image {
-            width: 100%;
-            height: 170px;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-
-        .building-info {
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .building-name {
-            font-size: 16px;
-            margin-bottom: 5px;
-            margin-top: 15px;
-            letter-spacing: 0.5px;
-        }
-
-        .building-address {
-            font-size: 12px;
-            color: #888;
-            letter-spacing: 0.5px;
-        }
-
-        .card.used {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
+    <div class="topbar">
+        <h1>Random Building</h1>
+        <div>
+            <button id="openSidebarBtn" class="btn">Overzicht (sidebar)</button>
+            <button id="exportPdfBtn" class="btn" title="Exporteer het overzicht naar PDF">Exporteer PDF</button>
+            <button id="clearStorageBtn" class="btn" title="Lijst &amp; localStorage leegmaken">Reset</button>
+        </div>
+    </div>
+
     <div class="grid" id="buildingGrid"></div>
 
-    <script>
-        let buildings = [];
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar" aria-label="Overzicht omgedraaide gebouwen">
+        <div class="sidebar-header">
+            <h2>Reeds omgedraaid <span id="countBadge" class="badge">0</span></h2>
+            <button id="closeSidebarBtn" class="btn" aria-label="Sluiten">Sluiten</button>
+        </div>
+        <div id="list" class="list"></div>
+    </aside>
 
-        // Fetch buildings data from JSON file
-        async function fetchBuildings() {
-            try {
-                const response = await fetch('json/buildinglist.json');
-                const data = await response.json();
-                buildings = data.buildings;
-                createCards();
-            } catch (error) {
-                console.error('Error loading buildings:', error);
-            }
-        }
-
-        const grid = document.getElementById('buildingGrid');
-
-        function createCards() {
-            let lastFlippedCard = null;
-            let usedCards = new Set(); // Track all used cards
-
-            // Create 12 cards
-            for (let i = 0; i < 24; i++) {
-                const card = document.createElement('div');
-                card.className = 'card';
-
-                card.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front"></div>
-                        <div class="card-back">
-                            <img class="building-image" src="" alt="Building">
-                            <div class="building-info">
-                                <div class="building-name"></div>
-                                <div class="building-address"></div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                card.addEventListener('click', function () {
-                    // Check if card is already used or flipped
-                    if (this.classList.contains('used') || this.classList.contains('flipped')) {
-                        return; // Do nothing if card is already used or flipped
-                    }
-
-                    // Flip back the previous card if it exists
-                    if (lastFlippedCard) {
-                        lastFlippedCard.classList.remove('flipped');
-                        // Mark the previous card as used
-                        lastFlippedCard.classList.add('used');
-                        usedCards.add(lastFlippedCard);
-                    }
-
-                    // Update the current card
-                    const randomBuilding = buildings[Math.floor(Math.random() * buildings.length)];
-                    const backside = this.querySelector('.card-back');
-                    backside.querySelector('.building-image').src = randomBuilding.image;
-                    backside.querySelector('.building-name').textContent = randomBuilding.name;
-                    backside.querySelector('.building-address').textContent = randomBuilding.address;
-
-                    // Flip the current card
-                    this.classList.add('flipped');
-
-                    // Update the last flipped card reference
-                    lastFlippedCard = this;
-                });
-
-                grid.appendChild(card);
-            }
-        }
-
-        // Initialize the application
-        fetchBuildings();
-    </script>
+    <script type="module" src="./js/app.js"></script>
 </body>
 
 </html>
