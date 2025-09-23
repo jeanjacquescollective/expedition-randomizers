@@ -13,7 +13,7 @@
 body {
 	background-color: var(--bg);
 	color: var(--fg);
-	font-family: "Orbitron", sans-serif;
+	font-family: "Roboto", sans-serif;
 	margin: 0;
 	padding: 20px;
 	font-weight: 600;
@@ -128,6 +128,8 @@ body {
 	text-align: center;
 }
 .building-name {
+	font-family: "Orbitron", sans-serif;
+	font-weight: 600;
 	font-size: 16px;
 	margin-bottom: 5px;
 	margin-top: 15px;
@@ -209,6 +211,8 @@ body {
 	gap: 4px;
 }
 .meta .title {
+	font-family: "Orbitron", sans-serif;
+	font-weight: 600;
 	font-size: 13px;
 	color: #fff;
 	line-height: 1.2;
