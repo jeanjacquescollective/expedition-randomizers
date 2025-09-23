@@ -222,6 +222,7 @@ body {
 	color: #bdbdbd;
 }
 .badge {
+	font-family: "Roboto", sans-serif;
 	display: inline-block;
 	padding: 2px 8px;
 	border: 1px solid #3a3a3a;
