@@ -1,13 +1,25 @@
 export function setupUI(onSpin) {
-  const button = document.getElementById('spinButton');
+  const button = document.querySelector('#spinButton');
   button.addEventListener('click', onSpin);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      if (!button.disabled) {
+        onSpin();
+      } 
+    }
+  });
+
+  
+
+
 
   const latSlot = document.querySelector('#latSlot .roulette__slot-value');
   const lngSlot = document.querySelector('#lngSlot .roulette__slot-value');
   const result = document.querySelector('#result');
   const link = document.querySelector('#gmapsLink');
-  const copyButton = document.getElementById('copyButton');
-  const copyText = document.getElementById('copyText');
+  const copyButton = document.querySelector('#copyButton');
+  const copyText = document.querySelector('#copyText');
   copyButton.addEventListener('click', () => {
     const lat = latSlot.textContent;
     const lng = lngSlot.textContent;
@@ -45,7 +57,7 @@ export function setupUI(onSpin) {
     updateSlot(finalCoord[0], finalCoord[1]);
     link.href = `https://maps.google.com/?q=${finalCoord[0]},${finalCoord[1]}`;
     result.classList.remove('hidden');
-  }
+  } 
 
   return {
     startRolling,

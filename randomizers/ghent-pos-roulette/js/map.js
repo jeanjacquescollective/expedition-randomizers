@@ -19,7 +19,7 @@ export function initMap() {
 export function showMarker([lat, lng]) {
   if (marker) marker.remove();
   marker = L.marker([lat, lng], { icon: dartIcon }).addTo(map);
-  L.circle([lat, lng], { radius: 75, color: Palette.smokyBlack, fillOpacity: 0.2 }).addTo(map);
+  L.circle([lat, lng], { radius: 75, color: Palette.heliotrope, fillOpacity: 0.1 }).addTo(map);
   map.setView([lat, lng], 20, { animate: true });
 
 }
