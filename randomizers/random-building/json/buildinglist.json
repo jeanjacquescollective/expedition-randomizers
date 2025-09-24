@@ -49,6 +49,91 @@
 			"name": "Design Museum Gent",
 			"address": "Jan Breydelstraat 5, 9000 Gent",
 			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937892/house_07_lown4l.png"
+		},
+		{
+			"name": "Sint-Pietersabdij",
+			"address": "Sint-Pietersplein 9, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937928/house_06_b8kwdp.png"
+		},
+		{
+			"name": "Kasteel van Laarne",
+			"address": "Eekhoekstraat 5, 9270 Laarne (vlakbij Gent)",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937860/house_02_nzkaxy.png"
+		},
+		{
+			"name": "Groot Vleeshuis",
+			"address": "Groentenmarkt 7, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/f_webp/v1757935772/house_08_rkns38.png"
+		},
+		{
+			"name": "KAA Gent Arena (Ghelamco Arena)",
+			"address": "Ottergemsesteenweg Zuid 808, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937892/house_07_lown4l.png"
+		},
+		{
+			"name": "Huis van Alijn",
+			"address": "Kraanlei 65, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757938708/house_04_mwy5dz.png"
+		},
+		{
+			"name": "De Krook",
+			"address": "Miriam Makebaplein 1, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937928/house_06_b8kwdp.png"
+		},
+		{
+			"name": "Stadshal (Gentse Stadspaviljoen)",
+			"address": "Poeljemarkt, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937892/house_07_lown4l.png"
+		},
+		{
+			"name": "SMAK - Stedelijk Museum voor Actuele Kunst",
+			"address": "Citadelpark, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/f_webp/v1757935772/house_08_rkns38.png"
+		},
+		{
+			"name": "MSK - Museum voor Schone Kunsten",
+			"address": "Citadelpark, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937860/house_02_nzkaxy.png"
+		},
+		{
+			"name": "Wintercircus",
+			"address": "Lamstraat 19, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757938708/house_04_mwy5dz.png"
+		},
+		{
+			"name": "Hotel d’Hane-Steenhuyse",
+			"address": "Veldstraat 55, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937928/house_06_b8kwdp.png"
+		},
+		{
+			"name": "Achtersikkel",
+			"address": "Biezekapelstraat 2, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937892/house_07_lown4l.png"
+		},
+		{
+			"name": "Patershol",
+			"address": "Wijk in het centrum, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/f_webp/v1757935772/house_08_rkns38.png"
+		},
+		{
+			"name": "Caermersklooster",
+			"address": "Vrouwebroersstraat 6, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937860/house_02_nzkaxy.png"
+		},
+		{
+			"name": "Arca Theater",
+			"address": "Sint-Widostraat 4, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757938708/house_04_mwy5dz.png"
+		},
+		{
+			"name": "NTGent Schouwburg",
+			"address": "Sint-Baafsplein 17, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937928/house_06_b8kwdp.png"
+		},
+		{
+			"name": "Sint-Annakerk",
+			"address": "Sint-Annaplein, 9000 Gent",
+			"image": "https://res.cloudinary.com/dvrgey2ty/image/upload/v1757937892/house_07_lown4l.png"
 		}
 	]
 }

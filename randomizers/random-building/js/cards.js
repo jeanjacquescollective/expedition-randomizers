@@ -1,7 +1,12 @@
 import { addFlipped } from "./storage.js";
 import { renderSidebar, toggleSidebar } from "./sidebar.js";
+import { showGroupModal } from "./modal.js";
 
 let lastFlippedCard = null;
+
+function wait(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export function createCards(buildings, gridEl) {
 	for (let i = 0; i < 24; i++) {
@@ -21,15 +26,27 @@ export function createCards(buildings, gridEl) {
       </div>
     `;
 
-		card.addEventListener("click", function () {
-			if (this.classList.contains("used") || this.classList.contains("flipped"))
+		card.addEventListener("click", async function () {
+			if (
+				this.classList.contains("used") ||
+				this.classList.contains("flipped")
+			) {
 				return;
+			}
 
+			// First turn back the last card if exists
 			if (lastFlippedCard) {
 				lastFlippedCard.classList.remove("flipped");
 				lastFlippedCard.classList.add("used");
+				// Wait for flip animation to complete (600ms is our CSS transition time)
+				await wait(600);
 			}
 
+			// Get group name using modal instead of prompt
+			const group = await showGroupModal();
+			if (!group) return; // Cancel if no group name entered
+
+			// Then prepare and show the new card
 			const randomBuilding =
 				buildings[Math.floor(Math.random() * buildings.length)];
 			const backside = this.querySelector(".card-back");
@@ -41,7 +58,7 @@ export function createCards(buildings, gridEl) {
 
 			this.classList.add("flipped");
 
-			const group = prompt("Voer een groepsnaam in voor dit gebouw:") ?? "";
+			// Save the flipped card data
 			addFlipped({
 				name: randomBuilding.name,
 				address: randomBuilding.address,
