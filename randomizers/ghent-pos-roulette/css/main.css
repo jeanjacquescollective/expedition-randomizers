@@ -132,7 +132,7 @@ body,
 }
 
 /* Spin button */
-.roulette__spin-btn {
+.roulette__spin-button {
     font-size: 1.2rem;
     padding: 10px 28px;
     background: var(--majorelle-blue);
@@ -147,12 +147,12 @@ body,
     transition: background 0.2s, color 0.2s;
 }
 
-.roulette__spin-btn:hover {
+.roulette__spin-button:hover {
     background: var(--heliotrope);
     color: var(--white);
 }
 
-.roulette__spin-btn:disabled {
+.roulette__spin-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     box-shadow: none;
@@ -182,8 +182,33 @@ body,
     color: var(--heliotrope);
 }
 
+.roulette__gmaps-link::after {
+    content: '🌐';
+    display: inline-block;
+    margin-left: 3px;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+    font-size: 1.1em;
+}
+
+.roulette__gmaps-link:hover::after {
+    opacity: 1;
+    border-left-color: var(--heliotrope);
+    animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Copy button */
-.roulette__copy-btn {
+.roulette__copy-button {
     margin-left: 12px;
     padding: 6px 16px;
     background: var(--heliotrope);
@@ -194,9 +219,10 @@ body,
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+    width: 10rem;
 }
 
-.roulette__copy-btn:hover {
+.roulette__copy-button:hover {
     background: var(--majorelle-blue);
     color: var(--white);
 }
@@ -287,7 +313,7 @@ body,
 .roulette__history-edit:hover, .roulette__history-delete:hover {
     color: var(--heliotrope);
 }
-#openHistoryBtn {
+#openHistoryButton {
     position: fixed;
     top: 1em;
     right: 1em;
@@ -301,7 +327,7 @@ body,
     font-weight: 500;
     transition: border 0.2s, color 0.2s;
 }
-#openHistoryBtn:hover {
+#openHistoryButton:hover {
     border-color: var(--heliotrope);
     color: var(--heliotrope);
 }
@@ -314,8 +340,7 @@ body,
     border-top: 1px solid #eee;
     background: #fafafa;
 }
-.roulette__export-btn {
-    background: var(--majorelle-blue);
+.roulette__export-button, .roulette__history-clear {
     color: var(--white);
     border: none;
     border-radius: 6px;
@@ -326,10 +351,16 @@ body,
     margin-right: 0.5em;
     transition: background 0.2s, color 0.2s;
 }
-.roulette__export-btn:last-child {
+.roulette__export-button {
+    background: var(--majorelle-blue);
+}
+.roulette__history-clear {
+    background: var(--light-coral);
+}
+.roulette__export-button:last-child {
     margin-right: 0;
 }
-.roulette__export-btn:hover {
+.roulette__export-button:hover {
     background: var(--heliotrope);
     color: var(--white);
 }

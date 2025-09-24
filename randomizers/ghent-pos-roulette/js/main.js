@@ -26,10 +26,10 @@ function startSpin(ui) {
 }
 
  const historyMenu = document.getElementById('historyMenu');
-    const openHistoryBtn = document.getElementById('openHistoryBtn');
-    const closeHistoryBtn = document.getElementById('closeHistoryBtn');
+    const openHistoryButton = document.getElementById('openHistoryButton');
+    const closeHistoryButton = document.getElementById('closeHistoryButton');
     const historyList = document.getElementById('historyList');
-
+    const clearHistoryButton = document.getElementById('clearHistoryButton');
     let historyData = []; // {lat, lng, name}
 
     function renderHistory() {
@@ -51,11 +51,11 @@ function startSpin(ui) {
             coordsSpan.className = 'roulette__history-coords';
             coordsSpan.textContent = `${item.lat.toFixed(5)}, ${item.lng.toFixed(5)}`;
 
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'roulette__history-delete';
-            deleteBtn.innerHTML = '🗑️';
-            deleteBtn.title = 'Delete';
-            deleteBtn.onclick = () => {
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'roulette__history-delete';
+            deleteButton.innerHTML = '🗑️';
+            deleteButton.title = 'Delete';
+            deleteButton.onclick = () => {
                 historyData.splice(idx, 1);
                 saveHistory();
                 renderHistory();
@@ -63,7 +63,7 @@ function startSpin(ui) {
 
             li.appendChild(nameInput);
             li.appendChild(coordsSpan);
-            li.appendChild(deleteBtn);
+            li.appendChild(deleteButton);
             historyList.appendChild(li);
         });
     }
@@ -79,12 +79,21 @@ function startSpin(ui) {
         }
     }
 
-    openHistoryBtn.onclick = () => {
-        historyMenu.classList.add('open');
-    };
-    closeHistoryBtn.onclick = () => {
-        historyMenu.classList.remove('open');
-    };
+    function clearHistory() {
+        if (confirm('Are you sure you want to clear the history?')) {
+            historyData = [];
+            saveHistory();
+            renderHistory();
+        }
+    }
+
+    openHistoryButton.addEventListener('click', () => {
+      historyMenu.classList.add('open');
+    });
+    closeHistoryButton.addEventListener('click', () => {
+      historyMenu.classList.remove('open');
+    });
+    clearHistoryButton.addEventListener('click', clearHistory);
 
     window.addEventListener('DOMContentLoaded', () => {
         loadHistory();
@@ -102,10 +111,10 @@ function startSpin(ui) {
     };
 
 
-    const exportPdfBtn = document.getElementById('exportPdfBtn');
-    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const exportPdfButton = document.getElementById('exportPdfButton');
+    const exportCsvButton = document.getElementById('exportCsvButton');
 
-    exportCsvBtn.onclick = () => {
+    exportCsvButton.onclick = () => {
       const rows = [['Name', 'Latitude', 'Longitude']];
       historyData.forEach(item => {
         rows.push([
@@ -114,6 +123,10 @@ function startSpin(ui) {
           item.lng
         ]);
       });
+      if(historyData.length === 0){
+        alert("No history to export.");
+        return;
+      }
       const csvContent = rows.map(r => r.join(',')).join('\r\n');
       const blob = new Blob([csvContent], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
@@ -126,7 +139,7 @@ function startSpin(ui) {
       URL.revokeObjectURL(url);
     };
 
-    exportPdfBtn.onclick = async () => {
+    exportPdfButton.onclick = async () => {
       // Dynamically load jsPDF if not present
       if (typeof window.jsPDF === 'undefined') {
         await import('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
@@ -151,5 +164,9 @@ function startSpin(ui) {
           y = 20;
         }
       });
+      if(historyData.length === 0){
+        alert("No history to export.");
+        return;
+      }
       doc.save('roulette-history.pdf');
     };

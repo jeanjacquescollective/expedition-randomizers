@@ -1,24 +1,27 @@
 export function setupUI(onSpin) {
-  const btn = document.getElementById('spinBtn');
-  btn.addEventListener('click', onSpin);
+  const button = document.getElementById('spinButton');
+  button.addEventListener('click', onSpin);
 
   const latSlot = document.querySelector('#latSlot .roulette__slot-value');
   const lngSlot = document.querySelector('#lngSlot .roulette__slot-value');
   const result = document.querySelector('#result');
   const link = document.querySelector('#gmapsLink');
-  const copyBtn = document.getElementById('copyBtn');
-  const copyStatus = document.getElementById('copyStatus');
-
-  copyBtn.addEventListener('click', () => {
+  const copyButton = document.getElementById('copyButton');
+  const copyText = document.getElementById('copyText');
+  copyButton.addEventListener('click', () => {
     const lat = latSlot.textContent;
     const lng = lngSlot.textContent;
     const text = `${lat}, ${lng}`;
     navigator.clipboard.writeText(text).then(() => {
-      copyStatus.textContent = 'Copied!';
-      setTimeout(() => copyStatus.textContent = '', 1500);
+      // copyStatus.textContent = 'Copied!';
+      copyText.textContent = 'Copied!';
+      setTimeout(() => {
+        // copyStatus.textContent = '';
+        copyText.textContent = 'Copy Lat/Lng';
+      }, 1500);
     }).catch(() => {
-      copyStatus.textContent = 'Failed to copy';
-      setTimeout(() => copyStatus.textContent = '', 1500);
+      copyText.textContent = 'Failed';
+      setTimeout(() => copyStatus.textContent = 'Copy Lat/Lng', 1500);
     });
   });
 
@@ -47,7 +50,7 @@ export function setupUI(onSpin) {
   return {
     startRolling,
     stopRolling,
-    disableSpin: () => btn.disabled = true,
-    enableSpin: () => btn.disabled = false
+    disableSpin: () => button.disabled = true,
+    enableSpin: () => button.disabled = false
   };
 }

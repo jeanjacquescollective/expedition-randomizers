@@ -29,28 +29,30 @@
 
     <!-- Bottom component: Spin button and result -->
     <div id="bottom-controls" class="roulette__controls roulette__controls--bottom">
-        <button id="spinBtn" class="roulette__spin-btn">Start!</button>
+        <button id="spinButton" class="roulette__spin-button">Start!</button>
         <div id="result" class="roulette__result hidden">
             <a id="gmapsLink" class="roulette__gmaps-link" href="#" target="_blank">View on Google Maps</a>
-            <button id="copyBtn" class="roulette__copy-btn">Copy Lat/Lng</button>
-            <span id="copyStatus" class="roulette__copy-status"></span>
+            <button id="copyButton" class="roulette__copy-button">
+                <span id="copyText" class="roulette__copy-text">Copy Lat/Lng</span>
+            </button>
         </div>
     </div>
     <!-- Aside menu for previous coordinates -->
     <aside id="historyMenu" class="roulette__history-menu">
         <div class="roulette__history-header">
             <h2>Previous Coordinates</h2>
-            <button id="closeHistoryBtn" class="roulette__history-close">&times;</button>
+            <button id="closeHistoryButton" class="roulette__history-close">&times;</button>
         </div>
         <ul id="historyList" class="roulette__history-list">
             <!-- History items will be dynamically added here -->
         </ul>
         <div class="roulette__history-actions">
-            <button id="exportPdfBtn" class="roulette__export-btn">Export to PDF</button>
-            <button id="exportCsvBtn" class="roulette__export-btn">Export to CSV</button>
+            <button id="clearHistoryButton" class="roulette__history-clear">Clear History</button>
+            <button id="exportPdfButton" class="roulette__export-button">Export to PDF</button>
+            <button id="exportCsvButton" class="roulette__export-button">Export to CSV</button>
         </div>
     </aside>
-    <button id="openHistoryBtn" class="roulette__history-open">&#9776; History</button>
+    <button id="openHistoryButton" class="roulette__history-open">&#9776; History</button>
 
     <script type="module" src="js/main.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
