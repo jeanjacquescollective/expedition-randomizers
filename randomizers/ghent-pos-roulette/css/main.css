@@ -28,6 +28,26 @@ body,
     background: url('../../../assets/png/background.png') no-repeat center center fixed;
 }
 
+input{ 
+    all: unset;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+    /* Remove number input arrows (spinners) */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    &[type="number"] {
+        -moz-appearance: textfield;
+    }
+}
+
 /* .roulette__overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -135,6 +155,26 @@ body,
     color: var(--majorelle-blue);
 }
 
+.roulette__slot-value:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    animation: pulse 1.5s infinite;
+
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 var(--heliotrope);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(215, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(215, 102, 241, 0);
+    }
+}
+
 /* Spin button */
 .roulette__spin-button {
     font-size: 1.2rem;
@@ -160,6 +200,50 @@ body,
     opacity: 0.6;
     cursor: not-allowed;
     box-shadow: none;
+}
+
+.roulette__slot--search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--heliotrope);
+}
+/* Search button */
+.roulette__search-button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: rotate 0.3s;
+    font-size: 3em;
+}
+
+.roulette__search-button > svg {
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+}
+
+.roulette__search-button:hover > svg {
+    transform: rotate(45deg);
+}
+
+.roulette__search-button.pin > svg {
+    transform: rotate(45deg);
+
+}
+
+.roulette__search-button.pin:hover > svg {
+    transform: translate(0, 2px) rotate(45deg);
+}
+
+.roulette__search-button .searchButtonIconCircle {
+    transition: fill 0.3s;
+}
+
+.roulette__search-button.pin .searchButtonIconCircle {
+    fill: var(--heliotrope);
 }
 
 .roulette__result {

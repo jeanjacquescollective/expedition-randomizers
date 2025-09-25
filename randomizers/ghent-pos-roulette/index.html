@@ -18,11 +18,20 @@
         <div class="roulette__slot-display">
             <div class="roulette__slot roulette__slot--lat" id="latSlot">
                 <span class="roulette__slot-label">Lat:</span>
-                <span class="roulette__slot-value">00.00000</span>
+                <input type="number" step="0.00001" class="roulette__slot-value" id="latInput" value="00.00000">
             </div>
             <div class="roulette__slot roulette__slot--lng" id="lngSlot">
                 <span class="roulette__slot-label">Lng:</span>
-                <span class="roulette__slot-value">00.00000</span>
+                <input type="number" step="0.00001" class="roulette__slot-value" id="lngInput" value="00.00000">
+            </div>
+            <div class="roulette__slot roulette__slot--search" id="searchSlot">
+                <button id="searchButton" class="roulette__search-button" title="Search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" id="searchCircle" class="searchButtonIconCircle"/>
+                        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
             </div>
         </div>
     </div>

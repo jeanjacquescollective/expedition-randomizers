@@ -5,6 +5,12 @@ import { setupUI } from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initMap();
+  const urlParams = new URLSearchParams(window.location.search);
+  const lat = parseFloat(urlParams.get('lat'));
+  const lng = parseFloat(urlParams.get('lng'));
+  if (!isNaN(lat) && !isNaN(lng)) {
+    showMarker([lat, lng], { width: 75 });
+  }
   const ui = setupUI(() => startSpin(ui));
 });
 
@@ -17,6 +23,7 @@ function startSpin(ui) {
     ui.stopRolling(pt);
     showMarker(pt);
       window.addRouletteHistory(pt[0], pt[1]);
+      window.history.replaceState({}, '', `?lat=${pt[0]}&lng=${pt[1]}`);
     setTimeout(() => {
       audio.currentTime = 0;
       audio.pause();
@@ -156,8 +163,8 @@ function startSpin(ui) {
       y += 8;
       historyData.forEach(item => {
         doc.text(item.name || '', 10, y);
-        doc.text(item.lat.toFixed(5), 70, y);
-        doc.text(item.lng.toFixed(5), 120, y);
+        doc.text(String(item.lat), 70, y);
+        doc.text(String(item.lng), 120, y);
         y += 8;
         if (y > 280) {
           doc.addPage();
