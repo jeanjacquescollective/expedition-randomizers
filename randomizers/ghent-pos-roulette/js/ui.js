@@ -88,10 +88,17 @@ export function setupUI(onSpin) {
     result.classList.remove('hidden');
   } 
 
+  function updateCoordsDisplay([lat, lng]) {
+    updateSlot(lat, lng);
+    link.href = `https://maps.google.com/?q=${lat},${lng}`;
+    result.classList.remove('hidden');
+  }
+
   return {
     startRolling,
     stopRolling,
     disableSpin: () => button.disabled = true,
-    enableSpin: () => button.disabled = false
+    enableSpin: () => button.disabled = false,
+    updateCoordsDisplay
   };
 }
