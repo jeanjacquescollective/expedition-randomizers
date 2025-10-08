@@ -1,112 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Word Slot Machine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: radial-gradient(circle at 50% 30%, #222 60%, #444 100%);
-            color: #ffd700;
-            font-family: 'Orbitron', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .slot-machine {
-            background: #222;
-            border: 8px solid #b8860b;
-            border-radius: 20px;
-            box-shadow: 0 0 40px #000, 0 0 10px #ffd700 inset;
-            padding: 40px 60px;
-            position: relative;
-            text-align: center;
-        }
-        .word-display {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .letter-slot {
-            background: #111;
-            border: 4px solid #ffd700;
-            border-radius: 10px;
-            width: 48px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            box-shadow: 0 0 20px #ffd700 inset;
-            position: relative;
-            overflow: hidden;
-        }
-        .letter-roller {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transition: transform 1s cubic-bezier(.17,.67,.83,.67);
-            will-change: transform;
-        }
-        .letter {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: inherit;
-            color: inherit;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-        .lever {
-            position: absolute;
-            right: -60px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 120px;
-            background: linear-gradient(to bottom, #b8860b 60%, #ffd700 100%);
-            border-radius: 20px;
-            box-shadow: 0 0 10px #ffd700;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .lever-ball {
-            width: 40px;
-            height: 40px;
-            background: #ffd700;
-            border: 4px solid #b8860b;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ffd700;
-            margin-bottom: -20px;
-        }
-        .spin-btn {
-            background: linear-gradient(90deg, #ffd700 60%, #b8860b 100%);
-            color: #222;
-            font-size: 1.5em;
-            font-family: 'Orbitron', Arial, sans-serif;
-            border: none;
-            border-radius: 10px;
-            padding: 15px 40px;
-            box-shadow: 0 0 10px #ffd700;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.2s;
-        }
-        .spin-btn:active {
-            background: linear-gradient(90deg, #b8860b 60%, #ffd700 100%);
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/history.css">
 </head>
+
 <body>
     <div class="slot-machine">
         <div class="word-display" id="wordDisplay"></div>
@@ -115,76 +16,34 @@
             <div class="lever-ball"></div>
         </div>
     </div>
-<script>
-    let wordList = [];
-    let maxLen = 0;
-    let spinning = false;
+    <!-- Aside menu for previous coordinates -->
+    <aside id="historyMenu" class="history-menu" role="complementary" aria-hidden="true" data-widget="history">
+        <div class="history-header">
+            <h2 class="history-title">History</h2>
+            <button id="closeHistoryButton" class="history-close" aria-label="Close history">&times;</button>
+        </div>
 
-    fetch('./assets/json/wordlist.json')
-        .then(response => response.json())
-        .then(data => {
-            wordList = data.begrippen || [];
-            maxLen = wordList.reduce((max, w) => Math.max(max, w.length), 0);
-            renderSlots();
-        });
+        <ul id="historyList" class="history-list" data-history-list>
+            <!-- History items will be dynamically added here -->
+        </ul>
 
-    function renderSlots() {
-        const display = document.getElementById('wordDisplay');
-        display.innerHTML = '';
-        for (let i = 0; i < maxLen; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'letter-slot';
-            slot.innerHTML = `<div class="letter-roller" id="roller${i}"></div>`;
-            display.appendChild(slot);
-            renderLetters(i, ' ');
-        }
-    }
+        <div class="history-actions">
+            <button id="clearHistoryButton" class="history-clear" data-action="clear">Clear History</button>
+            <button id="exportPdfButton" class="history-export" data-action="export-pdf">Export to PDF</button>
+            <button id="exportCsvButton" class="history-export" data-action="export-csv">Export to CSV</button>
+        </div>
 
-    function renderLetters(slotIdx, letter) {
-        const roller = document.getElementById(`roller${slotIdx}`);
-        roller.innerHTML = '';
-        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
-        for (let i = 0; i < alphabet.length; i++) {
-            const div = document.createElement('div');
-            div.className = 'letter';
-            div.style.transform = `translateY(${i * 64}px)`;
-            div.textContent = alphabet[i];
-            roller.appendChild(div);
-        }
-        const idx = alphabet.indexOf(letter.toUpperCase());
-        roller.style.transform = `translateY(-${(idx >= 0 ? idx : alphabet.length - 1) * 64}px)`;
-    }
+        <template id="historyItemTemplate">
+            <li class="history-item">
+                <span class="history-item-name"></span>
+                <span class="history-item-label"></span>
+                <button class="history-item-remove" aria-label="Remove item">×</button>
+            </li>
+        </template>
+    </aside>
 
-    function spinSlotMachine() {
-        if (spinning || !wordList.length) return;
-        spinning = true;
-        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
-        const chosenWord = wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
-
-        // Stap 1: Toon random letters
-        for (let i = 0; i < maxLen; i++) {
-            const roller = document.getElementById(`roller${i}`);
-            const randomIdx = Math.floor(Math.random() * alphabet.length);
-            roller.style.transition = 'transform 0.3s cubic-bezier(.17,.67,.83,.67)';
-            roller.style.transform = `translateY(-${randomIdx * 64}px)`;
-        }
-
-        // Stap 2: Na korte delay direct naar juiste letter
-        setTimeout(() => {
-            for (let i = 0; i < maxLen; i++) {
-                const roller = document.getElementById(`roller${i}`);
-                const letter = chosenWord[i] || ' ';
-                const idx = alphabet.indexOf(letter);
-                roller.style.transition = 'transform 0.5s cubic-bezier(.17,.67,.83,.67)';
-                roller.style.transform = `translateY(-${idx * 64}px)`;
-            }
-            setTimeout(() => { spinning = false; }, 600);
-        }, 400);
-    }
-
-    document.getElementById('spinBtn').addEventListener('click', spinSlotMachine);
-    document.getElementById('lever').addEventListener('click', spinSlotMachine);
-</script>
-
+    <button id="openHistoryButton" class="history-open" aria-controls="historyMenu" aria-expanded="false">☰ History</button>
+    <script  type="module" src="js/main.js"></script>
 </body>
+
 </html>

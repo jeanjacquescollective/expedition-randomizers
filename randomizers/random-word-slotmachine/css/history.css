@@ -1,0 +1,167 @@
+/* History menu */
+.history-menu,
+#historyMenu.history-menu {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100%;
+    background: var(--white);
+    box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* support both a toggled "open" class or aria-hidden attr */
+.history-menu.open,
+#historyMenu[aria-hidden="false"] {
+    right: 0;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    border-bottom: 1px solid #eee;
+}
+
+.history-title {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--dark-purple);
+    font-weight: 600;
+}
+
+.history-close,
+#closeHistoryButton.history-close {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--majorelle-blue);
+    transition: color 0.2s;
+    line-height: 1;
+    padding: 0;
+}
+.history-close:hover {
+    color: var(--heliotrope);
+}
+
+.history-list,
+#historyList.history-list {
+    list-style: none;
+    margin: 0;
+    padding: 1em;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.history-item,
+#historyList .history-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    background: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(103, 79, 249, 0.07);
+}
+
+.history-item-name {
+    font-weight: bold;
+    margin-right: 0.5em;
+    min-width: 80px;
+    color: var(--majorelle-blue);
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* label contains name/coords in the new markup */
+.history-item-label {
+    flex: 1;
+    margin-right: 0.5em;
+    color: var(--dark-purple);
+    font-size: 1rem;
+    word-break: break-word;
+}
+
+/* single remove button */
+.history-item-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.25em;
+    font-size: 1.25em;
+    color: var(--light-coral);
+    transition: color 0.2s;
+    line-height: 1;
+    padding: 0;
+}
+.history-item-remove:hover {
+    color: var(--heliotrope);
+}
+
+/* open history button */
+#openHistoryButton.history-open,
+#openHistoryButton {
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    z-index: 999;
+    background: var(--white);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    color: var(--majorelle-blue);
+    font-weight: 500;
+    transition: border 0.2s, color 0.2s;
+}
+#openHistoryButton:hover {
+    border-color: var(--heliotrope);
+    color: var(--heliotrope);
+}
+
+/* History actions (export buttons) */
+.history-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    border-top: 1px solid #eee;
+    background: #fafafa;
+}
+
+.history-export,
+.history-clear,
+#exportPdfButton,
+#exportCsvButton,
+#clearHistoryButton {
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 0.5em;
+    transition: background 0.2s, color 0.2s;
+}
+
+.history-export {
+    background: var(--majorelle-blue);
+}
+.history-clear {
+    background: var(--light-coral);
+}
+
+.history-export:last-child {
+    margin-right: 0;
+}
+
+.history-export:hover {
+    background: var(--heliotrope);
+    color: var(--white);
+}
