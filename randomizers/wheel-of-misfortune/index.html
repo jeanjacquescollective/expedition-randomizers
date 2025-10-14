@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Wheel of Misfortune (no canvas)</title>
+
+    <!-- Creepy fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="panel">
+            <header>
+                <h1>Wheel of Misfortune</h1>
+                <div class="controls">
+                    <button id="spinBtn">SPIN</button>
+                    <button id="reloadBtn" title="Reload items">Reload</button>
+                </div>
+            </header>
+
+            <div class="stage">
+                <div class="wheel-wrap">
+                    <div class="pointer" aria-hidden="true"></div>
+
+                    <!-- SVG-based wheel (no canvas) -->
+                    <svg id="wheel" viewBox="0 0 1200 1200" role="img" aria-label="Wheel of Misfortune" xmlns="http://www.w3.org/2000/svg">
+                        <!-- group that will be rotated to animate spinning -->
+                        <g id="wheelInner" transform="translate(600 600) rotate(0)"></g>
+
+                        <!-- decorative center disc -->
+                        <g class="wheel-center" transform="translate(600 600)">
+                            <circle r="68" fill="#120000" stroke="rgba(255,255,255,0.02)" stroke-width="2"></circle>
+                            <circle r="44" fill="rgba(255,255,255,0.02)"></circle>
+                        </g>
+                    </svg>
+                </div>
+
+                <aside class="info" aria-live="polite">
+                    <div class="small">Items are loaded from objectList.json (fallback list used if fetch fails).</div>
+                    <div class="result" id="result">Awaiting fate...</div>
+                    <div class="credits">Tip: serve this file over a local server for fetch to work (e.g. "npx
+                        http-server").</div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

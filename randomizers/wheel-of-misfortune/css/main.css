@@ -1,0 +1,195 @@
+:root {
+    --bg1: #0b0b0b;
+    --bg2: #1b0f0f;
+    --accent: #8b0000;
+    --muted: #8a8a8a;
+    --panel: #111111;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background:
+        radial-gradient(ellipse at center, rgba(60, 10, 10, 0.25) 0%, transparent 40%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    color: #ddd;
+    font-family: 'Nosifer', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+    gap: 30px;
+}
+
+.panel {
+    width: 720px;
+    max-width: 95vw;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 0, 0, 0.06);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 2px 0 rgba(255, 255, 255, 0.02);
+    position: relative;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Creepster', cursive;
+    letter-spacing: 1px;
+    color: var(--accent);
+    text-shadow: 0 2px 8px rgba(139, 0, 0, 0.6), 0 0 16px rgba(139, 0, 0, 0.06);
+    font-size: 28px;
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+button {
+    appearance: none;
+    border: 0;
+    background: linear-gradient(180deg, #3b0000, #200000);
+    color: #fbeaea;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+    transition: transform 0.14s ease, opacity 0.12s;
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+button[disabled] {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+}
+
+.stage {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.wheel-wrap {
+    position: relative;
+    width: 520px;
+    max-width: 55vw;
+    aspect-ratio: 1/1;
+}
+
+/* SVG wheel fills parent */
+svg#wheel {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8));
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.02), transparent 25%);
+    overflow: visible;
+}
+
+.pointer {
+    position: absolute;
+    top: -6%;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%) rotate(180deg);
+    width: 0;
+    height: 0;
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 40px solid var(--accent);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+    z-index: 10;
+}
+
+
+.info {
+    width: 260px;
+    min-width: 220px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.result {
+    margin-top: 12px;
+    font-family: 'Creepster', cursive;
+    color: #ffccd1;
+    font-size: 20px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.03);
+    padding-top: 10px;
+}
+
+.credits {
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.small {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(transparent, rgba(255, 0, 0, 0.02));
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    border-radius: 12px;
+}
+
+@media (max-width:680px) {
+    .stage {
+        flex-direction: column;
+    }
+
+    .info {
+        order: 2;
+        width: 100%;
+        max-width: 95vw;
+    }
+
+    .wheel-wrap {
+        width: 88vw;
+    }
+}
+
+/* small visual polish for SVG text */
+.seg-text {
+    fill: rgba(255, 240, 240, 0.95);
+    stroke: rgba(0, 0, 0, 0.6);
+    stroke-width: 0.6;
+    font-family: "Creepster", "Nosifer", serif;
+}
+
+.wheel-center {
+    pointer-events: none;
+}
