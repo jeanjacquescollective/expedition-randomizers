@@ -9,7 +9,8 @@ function wait(ms) {
 }
 
 export function createCards(buildings, gridEl) {
-	for (let i = 0; i < 24; i++) {
+	console.log(buildings);
+	for (let i = 0; i < buildings.length; i++) {
 		const card = document.createElement("div");
 		card.className = "card";
 
